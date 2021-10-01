@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NoonBot2", "NoonBot2.pyproj", "{35A13D13-4990-4211-8E3E-1D6938AD226F}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NoonBot", "NoonBot.pyproj", "{35A13D13-4990-4211-8E3E-1D6938AD226F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
