@@ -16,12 +16,11 @@ async def on_ready():
     print(f'{client.user} has connected to {guild.name}(id: {guild.id})!')
 
 @client.event
-async def on_message(message):
-    if message.author == client.user:
+async def on_message(message: discord.Message):
+    if message.author == client.user or message.content[0] != '!':
         return
-    if message.content[0] == '!':
-        commandHandler = Command(message.content)
-        response = commandHandler.execute()
-        await message.channel.send(response)
+    commandHandler = Command(message.content, message.author.display_name, message.author.mention)
+    response = commandHandler.execute()
+    await message.channel.send(response)
 
 client.run(TOKEN)
