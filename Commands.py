@@ -1,4 +1,5 @@
 from Roll import Roll
+from Kick import Kick
 
 class Command:
     def help(arg1, arg2):
@@ -20,7 +21,7 @@ class Command:
     _commands = {
             '!HELP' : help,
             '!ROLL' : Roll.roll,
-            '!KICK' : "Hey everyone! @x just tried to kick @y! That bastard!",
+            '!KICK' : Kick.kick,
             '!ADDROLE' : "This command is not yet functional...",
             '!REMOVEROLE' : "This command is not yet functional..."}
 
