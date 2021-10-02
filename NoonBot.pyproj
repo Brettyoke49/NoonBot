@@ -21,13 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Kick.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="NoonBot.py" />
+    <Compile Include="Roles.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Roll.py">
       <SubType>Code</SubType>
     </Compile>
