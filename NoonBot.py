@@ -15,7 +15,15 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 ERRORS_CHANNEL = int(os.getenv('ERRORS_CHANNEL'))
 
-bot = commands.Bot(command_prefix='!', case_insensitive=True)
+myHelpCommand = commands.DefaultHelpCommand(
+    no_category = "\nOther Commands"
+)
+
+bot = commands.Bot(
+    command_prefix='!', 
+    case_insensitive=True, 
+    help_command = myHelpCommand
+)
 
 @bot.event
 async def on_ready():
@@ -35,27 +43,39 @@ async def _roll(ctx, low: int=None, high: int=None):
 async def _kick(ctx, member: discord.Member):
     await ctx.send("Hey everyone! " + ctx.author.mention + " just tried to kick " + member.mention + "! What a bastard!")
 
-#Add Role
-@bot.command(name = "AddRole", help = "[Role] - Add the specified role to yourself")
-async def _addRole(ctx, role: discord.Role):
-    roleManager = Roles(ctx.author)
-    message = await roleManager.addRole(role)
-    await ctx.send(message)
+class RoleEditing(commands.Cog, name = "Role Editing"):
+    """Contains all commands relevant to role manipulation"""
+    def __init__(self, bot):
+        self.bot = bot
 
-#Remove Role
-@bot.command(name = "RemoveRole", help = "[Role] - Remove the specified role from yourself")
-async def _removeRole(ctx, role: discord.Role):
-    roleManager = Roles(ctx.author)
-    message = await roleManager.removeRole(role)
-    await ctx.send(message)
+    #Add Role
+    @commands.command(name = "AddRole", help = "[Role] - Add the specified role to yourself")
+    async def _addRole(self, ctx, role: discord.Role):
+        roleManager = Roles(ctx.author)
+        message = await roleManager.addRole(role)
+        await ctx.send(message)
 
-#List Roles
-@bot.command(name = "ListRoles", help = "List all of your current roles")
-@commands.cooldown(1, 5, commands.BucketType.user)
-async def _test(ctx):
-    roleManager = Roles(ctx.author)
-    message = roleManager.listRoles()
-    await ctx.send(message)
+    #Remove Role
+    @commands.command(name = "RemoveRole", help = "[Role] - Remove the specified role from yourself")
+    async def _removeRole(self, ctx, role: discord.Role):
+        roleManager = Roles(ctx.author)
+        message = await roleManager.removeRole(role)
+        await ctx.send(message)
+
+    #List My Roles
+    @commands.command(name = "MyRoles", help = "List all of your current roles")
+    async def _myRoles(self, ctx):
+        roleManager = Roles(ctx.author)
+        message = roleManager.listRoles()
+        await ctx.send(message)
+
+    #List All Roles
+    @commands.command(name = "AllRoles", help = "List all of the server roles")
+    @commands.cooldown(1, 10, commands.BucketType.channel)
+    async def _allRoles(self, ctx):
+        roleManager = Roles(ctx.author)
+        message = roleManager.listServerRoles()   
+        await ctx.send(message)
 
 #COMMAND ERROR HANDLER
 @bot.event
@@ -78,4 +98,5 @@ async def on_command_error(ctx, error):
         errorChannel = bot.get_channel(ERRORS_CHANNEL)
         await errorChannel.send(message)
 
+bot.add_cog(RoleEditing(bot))
 bot.run(TOKEN)

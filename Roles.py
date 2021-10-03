@@ -39,3 +39,14 @@ class Roles:
             delimiter = ", "
 
         return f"Your roles: {roles}"
+
+    def listServerRoles(self):
+        roles = "```\n"
+
+        for role in self.member.guild.roles:
+            if role.name == "@everyone" or role.name == "NoonBot":
+                continue
+            roles += role.name + "\n"
+
+        roles += "```"
+        return roles
